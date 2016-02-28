@@ -1,0 +1,8 @@
+android_client/.gradle/
+android_client/.idea/
+android_client/app/build/
+android_client/gradle/
+android_client/android_client.iml
+android_client/app/app.iml
+android_client/gradlew
+android_client/gradlew.bat
