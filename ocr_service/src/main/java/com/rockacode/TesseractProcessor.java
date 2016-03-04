@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import net.sourceforge.tess4j.ITesseract;
@@ -20,7 +21,8 @@ public class TesseractProcessor {
 
 	private static final Logger logger = LoggerFactory.getLogger(TesseractProcessor.class);
 	
-	public static String DATAPATH;
+	@Value("${tessaract.datapath}")
+	public String DATAPATH;
 
 	public String getTextFromImage(byte[] image, String lang) throws IOException, TesseractException {
 		InputStream in = new ByteArrayInputStream(image);
