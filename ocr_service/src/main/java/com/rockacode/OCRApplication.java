@@ -19,7 +19,6 @@ public class OCRApplication {
 	}
 
 	/**
-	 * Run the app with command : java -jar ocrprocessor-0.0.1-SNAPSHOT.jar
-	 * -Dtessaract.datapath=/path/to/tessdata
+	 * Run : java -jar application.jar -Dtessaract.datapath=/path/to/tessdata
 	 */
 }
