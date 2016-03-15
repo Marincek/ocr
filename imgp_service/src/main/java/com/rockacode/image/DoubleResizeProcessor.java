@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
-public class DoubleResizeProcessor implements ImageProcessor {
+public class DoubleResizeProcessor extends BaseImageProcessor {
 	
 	@Override
 	public BufferedImage process(BufferedImage image) {
@@ -20,7 +20,7 @@ public class DoubleResizeProcessor implements ImageProcessor {
 		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 		g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		return resizedImage;
+		return returnImage(image);
 	}
 
 }

@@ -1,13 +1,20 @@
 <html>
 <body>
+	<p>Only process image</p>
 	<form method="POST" enctype="multipart/form-data"
 		action="process">
-		File to upload: <input type="file" name="file"><br /> 
-		<input type="checkbox" name="rezise" checked="checked">Resize photo to double size<br>
-  		<input type="checkbox" name="grayscale" checked="checked">Grayscale<br>
-  		<input type="checkbox" name="blackwhite" checked="checked">Black & White<br>
-  		<input type="checkbox" name="noise" checked="checked" >OpenCV ()<br>
+		Image to upload: <input type="file" name="file" accept="image/*"><br /> 
 		<input type="submit" value="Upload"> Press here to upload the file!
 	</form>
+	<br />
+	<br />
+	<p>Process image and do OCR</p>
+	<form method="POST" enctype="multipart/form-data"
+		action="processtext">
+		Image to upload: <input type="file" name="file" accept="image/*"><br /> 
+		Language: <input type="text" name="lang" value="eng"><br />
+		<input type="submit" value="Upload"> Press here to upload the file!
+	</form>	
+	
 </body>
 </html>

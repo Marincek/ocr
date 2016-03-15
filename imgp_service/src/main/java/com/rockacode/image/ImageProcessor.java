@@ -4,6 +4,10 @@ import java.awt.image.BufferedImage;
 
 public interface ImageProcessor {
 
-	public BufferedImage process(BufferedImage image);
+	BufferedImage process(BufferedImage image);
+	
+	void setSuccessor(ImageProcessor imageProcessor);
+	
+	boolean hasSuccessor();
 	
 }

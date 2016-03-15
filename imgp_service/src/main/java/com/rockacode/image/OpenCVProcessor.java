@@ -7,7 +7,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
-public class OpenCVProcessor implements ImageProcessor {
+public class OpenCVProcessor extends BaseImageProcessor{
 
 	private int imgWidth;
 	private int imgHeight;
@@ -31,7 +31,9 @@ public class OpenCVProcessor implements ImageProcessor {
 
 		Imgproc.dilate(matImage, matImage, Imgproc.getStructuringElement(Imgproc.MORPH_CROSS, new Size(4, 4)));
 
-		return mat2Img(matImage); // getNegativeImage(mat2Img(matImage));
+		// getNegativeImage(mat2Img(matImage));
+		
+		return returnImage(mat2Img(matImage));
 	}
 
 	private BufferedImage getNegativeImage(BufferedImage img) {

@@ -1,6 +1,7 @@
 package com.rockacode.domain;
 
 public class ResponseText extends BaseResponse {
+	
 	private String text;
 
 	public String getText() {

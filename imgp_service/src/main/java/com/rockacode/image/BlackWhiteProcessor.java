@@ -3,7 +3,7 @@ package com.rockacode.image;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-public class BlackWhiteProcessor implements ImageProcessor {
+public class BlackWhiteProcessor extends BaseImageProcessor {
 
 	static final int BLACK = 0;
 	static final int WHITE = 255;
@@ -32,7 +32,7 @@ public class BlackWhiteProcessor implements ImageProcessor {
 			e.printStackTrace();
 		}
 
-		return image;
+		return returnImage(image);
 	}
 
 }

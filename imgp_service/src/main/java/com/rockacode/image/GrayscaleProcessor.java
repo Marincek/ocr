@@ -3,7 +3,7 @@ package com.rockacode.image;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-public class GrayscaleProcessor implements ImageProcessor {
+public class GrayscaleProcessor extends BaseImageProcessor {
 
 	@Override
 	public BufferedImage process(BufferedImage image) {
@@ -29,7 +29,7 @@ public class GrayscaleProcessor implements ImageProcessor {
 			e.printStackTrace();
 		}
 
-		return image;
+		return returnImage(image);
 	}
 
 }
