@@ -19,6 +19,6 @@ public class OCRApplication {
 	}
 
 	/**
-	 * Run : java -jar application.jar -Dtessaract.datapath=/path/to/tessdata
+	 * Run : java -jar application.jar -Dtessaract.datapath=/path/to/tessdata  -Dserver.port=9000
 	 */
 }

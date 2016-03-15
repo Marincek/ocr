@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,9 +23,6 @@ public class OCRController {
 	@Autowired
 	private OCRService service;
 
-	@Value("${cloud.server.address}")
-	private String serverAddress;
-
 	@RequestMapping(value = "/upload", method = RequestMethod.GET)
 	public String provideUploadInfo() {
 		return "You can upload a file by posting to this same URL.";
@@ -42,7 +38,7 @@ public class OCRController {
 		}
 
 		try {
-			return "Text from image is : " + service.doOcrProcessing(file.getBytes(), lang);
+			return service.doOcrProcessing(file.getBytes(), lang);
 		} catch (IOException e) {
 			logger.error("IOException , probem in reading file form byte[]");
 			e.printStackTrace();
