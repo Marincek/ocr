@@ -20,6 +20,8 @@ android {
 
     packagingOptions {
         exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+
     }
 }
 
@@ -33,7 +35,8 @@ dependencies {
     }
     compile 'com.squareup.okhttp3:okhttp:3.0.0'
     compile 'com.squareup.retrofit2:converter-jackson:2.0.0-beta4'
-
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.github.clans:fab:1.6.2'
     compile "com.android.support:support-v13:23.1.0"
 
 }
