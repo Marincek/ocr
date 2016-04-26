@@ -3,20 +3,28 @@ package com.rockacode.ocr.ui.camera;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.listener.RequestListener;
+import com.octo.android.robospice.request.listener.RequestProgress;
+import com.octo.android.robospice.request.listener.RequestProgressListener;
 import com.rockacode.ocr.R;
+import com.rockacode.ocr.communication.tasks.SendPhotoTask;
+import com.rockacode.ocr.domain.ResponsePhoto;
+import com.rockacode.ocr.ui.BaseActivity;
 import com.squareup.picasso.Picasso;
 
-public class ImageActivity extends AppCompatActivity implements View.OnClickListener {
+public class ImageActivity extends BaseActivity implements View.OnClickListener, RequestListener<ResponsePhoto>, RequestProgressListener {
 
     private ImageView imageView;
     private Uri filePath;
 
+    private FloatingActionMenu floatingActionMenu;
     private FloatingActionButton processPhoto;
     private FloatingActionButton ocrPhoto;
     private FloatingActionButton settings;
@@ -35,6 +43,9 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
         handleIntent(getIntent());
 
         init();
+
+//        spiceManager.execute(LoginTask.create("testuser","testpass", this), this);
+
     }
 
     private void handleIntent(Intent intent) {
@@ -49,8 +60,10 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
         ocrPhoto.setOnClickListener(this);
         settings = (FloatingActionButton) findViewById(R.id.menu_item_settings);
         settings.setOnClickListener(this);
+        floatingActionMenu = (FloatingActionMenu) findViewById(R.id.fab);
 
         Picasso.with(this).load(filePath).placeholder(R.drawable.ic_menu_camera).fit().centerInside().into(imageView);
+
     }
 
     @Override
@@ -66,12 +79,37 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
                 openSettings();
                 break;
         }
+        floatingActionMenu.close(true);
     }
 
     private void openSettings() {
     }
 
     private void sendPhotoToProcess(boolean ocr) {
+        if(ocr){
 
+        }else{
+            spiceManager.execute(new SendPhotoTask(filePath), this);
+        }
+    }
+
+    @Override
+    public void onRequestFailure(SpiceException spiceException) {
+
+    }
+
+    @Override
+    public void onRequestSuccess(ResponsePhoto s) {
+
+    }
+
+    @Override
+    public void onRequestProgressUpdate(RequestProgress progress) {
+        switch (progress.getStatus()) {
+            case PENDING:
+                break;
+            case COMPLETE:
+                break;
+        }
     }
 }
