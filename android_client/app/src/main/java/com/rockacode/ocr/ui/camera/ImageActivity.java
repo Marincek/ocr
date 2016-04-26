@@ -3,6 +3,7 @@ package com.rockacode.ocr.ui.camera;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,6 +19,9 @@ import com.rockacode.ocr.communication.tasks.SendPhotoTask;
 import com.rockacode.ocr.domain.ResponsePhoto;
 import com.rockacode.ocr.ui.BaseActivity;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 public class ImageActivity extends BaseActivity implements View.OnClickListener, RequestListener<ResponsePhoto>, RequestProgressListener {
 
@@ -100,7 +104,22 @@ public class ImageActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onRequestSuccess(ResponsePhoto s) {
+        File photo=new File(Environment.getExternalStorageDirectory(), "photo.jpg");
 
+        if (photo.exists()) {
+            photo.delete();
+        }
+
+        try {
+            FileOutputStream fos=new FileOutputStream(photo.getPath());
+            fos.write(s.getPhoto());
+            fos.close();
+        }
+        catch (java.io.IOException e) {
+            e.fillInStackTrace();
+        }
+
+        Picasso.with(this).load(photo).placeholder(R.drawable.ic_menu_camera).fit().centerInside().into(imageView);
     }
 
     @Override

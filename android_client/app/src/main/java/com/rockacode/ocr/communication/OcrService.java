@@ -1,7 +1,9 @@
 package com.rockacode.ocr.communication;
 
+import com.rockacode.ocr.domain.ResponsePhoto;
+import com.rockacode.ocr.domain.ResponseText;
+
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -14,12 +16,12 @@ public interface OcrService {
 
     @Multipart
     @POST("/processphoto")
-    Call<ResponseBody>  uploadPhotoForProcessing(
+    Call<ResponsePhoto>  uploadPhotoForProcessing(
             @Part("file\"; filename=\"image.png\" ") RequestBody file);
 
     @Multipart
     @POST("/processtext")
-    Call<ResponseBody>  uploadPhotoForProcessingText(
+    Call<ResponseText>  uploadPhotoForProcessingText(
             @Part("file\"; filename=\"image.png\" ") RequestBody file, @Part("lang") RequestBody language);
 
 }
