@@ -335,7 +335,7 @@ public class CameraFragment extends Fragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mFile = new File(Environment.getExternalStorageDirectory(), "pic.jpg");
+        mFile = new File(Environment.getExternalStorageDirectory(), System.currentTimeMillis()+".jpg");
     }
 
     @Override
