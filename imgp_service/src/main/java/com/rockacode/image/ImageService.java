@@ -25,7 +25,6 @@ public class ImageService {
 	private DoubleResizeProcessor doubleResizeProcessor = new DoubleResizeProcessor();
 	private GrayscaleProcessor grayscaleProcessor = new GrayscaleProcessor();
 	private BlackWhiteProcessor blackWhiteProcessor = new BlackWhiteProcessor();
-	private OpenCVProcessor cvProcessor = new OpenCVProcessor();
 
 	public ResponsePhoto process(MultipartFile file) throws IOException {
 		BufferedImage image = ImageIO.read(file.getInputStream());
