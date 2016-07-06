@@ -60,6 +60,7 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.rockacode.ocr.R;
@@ -129,6 +130,7 @@ public class CameraFragment extends Fragment
 
     private String mCameraId;
     private TextureView mTextureView;
+    private LinearLayout loading;
     private CameraCaptureSession mCaptureSession;
     private CameraDevice mCameraDevice;
     private Size mPreviewSize;
@@ -330,6 +332,8 @@ public class CameraFragment extends Fragment
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         view.findViewById(R.id.picture).setOnClickListener(this);
         mTextureView = (TextureView) view.findViewById(R.id.texture);
+        loading = (LinearLayout) view.findViewById(R.id.loading);
+        loading.setVisibility(View.GONE);
     }
 
     @Override
@@ -667,6 +671,7 @@ public class CameraFragment extends Fragment
      * Initiate a still image capture.
      */
     private void takePicture() {
+        loading.setVisibility(View.VISIBLE);
         lockFocus();
     }
 
