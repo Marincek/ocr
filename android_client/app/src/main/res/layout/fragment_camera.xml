@@ -22,5 +22,19 @@
         android:src="@drawable/ic_camera_enhance_white_24dp"
         app:fabSize="normal" />
 
+    <LinearLayout
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:background="#80000000">
+        <ProgressBar
+            android:layout_gravity="center"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
 
 </RelativeLayout>
