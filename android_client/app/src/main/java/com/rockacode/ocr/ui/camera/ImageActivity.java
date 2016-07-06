@@ -53,7 +53,7 @@ public class ImageActivity extends BaseActivity implements View.OnClickListener,
     }
 
     private void handleIntent(Intent intent) {
-        filePath = (Uri) intent.getExtras().get(Intent.EXTRA_STREAM);
+        filePath = intent.getData();
     }
 
     private void init() {
