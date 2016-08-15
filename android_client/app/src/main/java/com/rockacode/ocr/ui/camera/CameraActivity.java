@@ -18,15 +18,9 @@ package com.rockacode.ocr.ui.camera;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
-import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.listener.RequestListener;
 import com.rockacode.ocr.R;
-import com.rockacode.ocr.communication.tasks.BaseRequest;
 
-public class CameraActivity extends AppCompatActivity implements RequestListener<String> {
-
-    private BaseRequest loginTask;
+public class CameraActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +34,4 @@ public class CameraActivity extends AppCompatActivity implements RequestListener
 
     }
 
-
-    @Override
-    public void onRequestFailure(SpiceException spiceException) {
-
-    }
-
-    @Override
-    public void onRequestSuccess(String s) {
-
-    }
 }

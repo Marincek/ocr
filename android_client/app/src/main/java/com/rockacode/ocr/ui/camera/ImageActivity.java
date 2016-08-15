@@ -10,10 +10,6 @@ import android.widget.ImageView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.listener.RequestListener;
-import com.octo.android.robospice.request.listener.RequestProgress;
-import com.octo.android.robospice.request.listener.RequestProgressListener;
 import com.rockacode.ocr.R;
 import com.rockacode.ocr.communication.tasks.SendPhotoTask;
 import com.rockacode.ocr.domain.ResponsePhoto;
@@ -23,7 +19,9 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.io.FileOutputStream;
 
-public class ImageActivity extends BaseActivity implements View.OnClickListener, RequestListener<ResponsePhoto>, RequestProgressListener {
+import rx.Subscriber;
+
+public class ImageActivity extends BaseActivity implements View.OnClickListener {
 
     private ImageView imageView;
     private Uri filePath;
@@ -93,42 +91,42 @@ public class ImageActivity extends BaseActivity implements View.OnClickListener,
         if(ocr){
 
         }else{
-            spiceManager.execute(new SendPhotoTask(filePath), this);
-        }
-    }
+            new SendPhotoTask(filePath).execute().subscribe(new Subscriber<ResponsePhoto>() {
+                @Override
+                public void onStart() {
+                }
 
-    @Override
-    public void onRequestFailure(SpiceException spiceException) {
+                @Override
+                public void onCompleted() {
 
-    }
+                }
 
-    @Override
-    public void onRequestSuccess(ResponsePhoto s) {
-        File photo=new File(Environment.getExternalStorageDirectory(), "photo.jpg");
+                @Override
+                public void onError(Throwable e) {
 
-        if (photo.exists()) {
-            photo.delete();
-        }
+                }
 
-        try {
-            FileOutputStream fos=new FileOutputStream(photo.getPath());
-            fos.write(s.getPhoto());
-            fos.close();
-        }
-        catch (java.io.IOException e) {
-            e.fillInStackTrace();
-        }
+                @Override
+                public void onNext(ResponsePhoto responsePhoto) {
+                    File photo=new File(Environment.getExternalStorageDirectory(), "photo.jpg");
 
-        Picasso.with(this).load(photo).placeholder(R.drawable.ic_menu_camera).fit().centerInside().into(imageView);
-    }
+                    if (photo.exists()) {
+                        photo.delete();
+                    }
 
-    @Override
-    public void onRequestProgressUpdate(RequestProgress progress) {
-        switch (progress.getStatus()) {
-            case PENDING:
-                break;
-            case COMPLETE:
-                break;
+                    try {
+                        FileOutputStream fos=new FileOutputStream(photo.getPath());
+                        fos.write(responsePhoto.getPhoto());
+                        fos.close();
+                    }
+                    catch (java.io.IOException e) {
+                        e.fillInStackTrace();
+                    }
+
+                    Picasso.with(ImageActivity.this).load(photo).placeholder(R.drawable.ic_menu_camera).fit().centerInside().into(imageView);
+                }
+
+            });
         }
     }
 }

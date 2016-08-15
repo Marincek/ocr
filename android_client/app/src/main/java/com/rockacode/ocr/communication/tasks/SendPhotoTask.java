@@ -2,45 +2,55 @@ package com.rockacode.ocr.communication.tasks;
 
 import android.net.Uri;
 
+import com.rockacode.ocr.communication.OcrService;
+import com.rockacode.ocr.communication.Parser;
 import com.rockacode.ocr.domain.ResponsePhoto;
 
+import org.json.JSONException;
+
 import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
  * Created by Marincek on 26-Apr-16.
  */
 
-public class SendPhotoTask extends BaseRequest<ResponsePhoto> {
+public class SendPhotoTask extends BaseTask<ResponsePhoto> implements Callback<String> {
+
 
     private Uri imageUri;
 
     public SendPhotoTask(Uri imageUri) {
-        super(ResponsePhoto.class);
         this.imageUri = imageUri;
     }
 
     @Override
-    public ResponsePhoto loadDataFromNetwork() throws Exception {
+    protected void doInBackground() {
         File file = new File(imageUri.getPath());
         RequestBody fbody = RequestBody.create(MediaType.parse("image/*"), file);
-        Call<ResponsePhoto> call = api.uploadPhotoForProcessing(fbody);
-        Response<ResponsePhoto> result = call.execute();
-//        call.enqueue(new Callback<ResponseBody>() {
-//            @Override
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseBody> call, Throwable t) {
-//
-//            }
-//        });
+        OcrService.getApi().uploadPhotoForProcessing(fbody).enqueue(this);
+    }
 
-        return result.body();
+    @Override
+    public void onResponse(Call<String> call, Response<String> response) {
+        try {
+            onSuccess(Parser.parsePhoto(response));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onFailure(Call<String> call, Throwable t) {
+
     }
 }
