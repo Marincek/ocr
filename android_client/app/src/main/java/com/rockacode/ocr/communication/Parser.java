@@ -3,6 +3,7 @@ package com.rockacode.ocr.communication;
 import android.util.Base64;
 
 import com.rockacode.ocr.domain.ResponsePhoto;
+import com.rockacode.ocr.domain.ResponseText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,5 +24,13 @@ public class Parser {
         responsePhoto.setProcessingTime(jsonObject.getLong("processingTime"));
         responsePhoto.setPhoto(Base64.decode(jsonObject.getString("photo"), Base64.DEFAULT));
         return responsePhoto;
+    }
+
+    public static ResponseText parseText(Response<String> response) throws JSONException {
+        ResponseText responseText = new ResponseText();
+        JSONObject jsonObject = new JSONObject(response.body());
+        responseText.setProcessingTime(jsonObject.getLong("processingTime"));
+        responseText.setText(jsonObject.getString("text"));
+        return responseText;
     }
 }

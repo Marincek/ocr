@@ -7,12 +7,15 @@ import android.os.Environment;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.rockacode.ocr.R;
+import com.rockacode.ocr.communication.tasks.PhotoToTextTask;
 import com.rockacode.ocr.communication.tasks.SendPhotoTask;
 import com.rockacode.ocr.domain.ResponsePhoto;
+import com.rockacode.ocr.domain.ResponseText;
 import com.rockacode.ocr.ui.BaseActivity;
 import com.squareup.picasso.Picasso;
 
@@ -75,7 +78,7 @@ public class ImageActivity extends BaseActivity implements View.OnClickListener 
                 sendPhotoToProcess(false);
                 break;
             case R.id.menu_item_proces_photo_ocr:
-                sendPhotoToProcess(false);
+                sendPhotoToProcess(true);
                 break;
             case R.id.menu_item_settings:
                 openSettings();
@@ -88,9 +91,29 @@ public class ImageActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void sendPhotoToProcess(boolean ocr) {
-        if(ocr){
+        if (ocr) {
+            new PhotoToTextTask(filePath).execute().subscribe(new Subscriber<ResponseText>() {
 
-        }else{
+                @Override
+                public void onStart() {
+                }
+
+                @Override
+                public void onCompleted() {
+
+                }
+
+                @Override
+                public void onError(Throwable e) {
+
+                }
+
+                @Override
+                public void onNext(ResponseText responseText) {
+                    Toast.makeText(getBaseContext(),responseText.getText(),Toast.LENGTH_LONG).show();
+                }
+            });
+        } else {
             new SendPhotoTask(filePath).execute().subscribe(new Subscriber<ResponsePhoto>() {
                 @Override
                 public void onStart() {
@@ -108,18 +131,17 @@ public class ImageActivity extends BaseActivity implements View.OnClickListener 
 
                 @Override
                 public void onNext(ResponsePhoto responsePhoto) {
-                    File photo=new File(Environment.getExternalStorageDirectory(), "photo.jpg");
+                    File photo = new File(Environment.getExternalStorageDirectory(), "photo.jpg");
 
                     if (photo.exists()) {
                         photo.delete();
                     }
 
                     try {
-                        FileOutputStream fos=new FileOutputStream(photo.getPath());
+                        FileOutputStream fos = new FileOutputStream(photo.getPath());
                         fos.write(responsePhoto.getPhoto());
                         fos.close();
-                    }
-                    catch (java.io.IOException e) {
+                    } catch (java.io.IOException e) {
                         e.fillInStackTrace();
                     }
 
