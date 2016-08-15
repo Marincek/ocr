@@ -15,15 +15,14 @@
         android:layout_marginBottom="20dp"
         android:id="@+id/take_photo"
         android:layout_width="match_parent"
+        android:enabled="false"
         android:layout_height="wrap_content"
-        android:onClick="takePhoto"
         android:text="Take a photo"/>
 
     <Button
         android:id="@+id/choose_photo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="choosePhoto"
         android:text="Select photo from gallery"/>
 
 </LinearLayout>
