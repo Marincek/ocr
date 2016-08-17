@@ -35,7 +35,7 @@ public class PhotoToTextTask extends BaseTask<ResponseText> implements Callback<
     protected void doInBackground() {
         File file = new File(imageUri.getPath());
         RequestBody fbody = RequestBody.create(MediaType.parse("image/*"), file);
-        RequestBody langBody = RequestBody.create(MediaType.parse("text/plain"), "eng");
+        RequestBody langBody = RequestBody.create(MediaType.parse("text/plain"), "mkd");
         OcrService.getApi().uploadPhotoForProcessingText(fbody, langBody).enqueue(this);
     }
 
@@ -50,6 +50,6 @@ public class PhotoToTextTask extends BaseTask<ResponseText> implements Callback<
 
     @Override
     public void onFailure(Call<String> call, Throwable t) {
-
+        t.printStackTrace();
     }
 }

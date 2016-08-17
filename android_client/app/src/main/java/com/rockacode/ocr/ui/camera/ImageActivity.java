@@ -48,9 +48,6 @@ public class ImageActivity extends BaseActivity implements View.OnClickListener 
         handleIntent(getIntent());
 
         init();
-
-//        spiceManager.execute(LoginTask.create("testuser","testpass", this), this);
-
     }
 
     private void handleIntent(Intent intent) {
@@ -66,7 +63,9 @@ public class ImageActivity extends BaseActivity implements View.OnClickListener 
         settings = (FloatingActionButton) findViewById(R.id.menu_item_settings);
         settings.setOnClickListener(this);
         floatingActionMenu = (FloatingActionMenu) findViewById(R.id.fab);
-
+        if(filePath.toString().startsWith("/stor")){
+            filePath = Uri.parse("file://"+filePath.toString());
+        }
         Picasso.with(this).load(filePath).placeholder(R.drawable.ic_menu_camera).fit().centerInside().into(imageView);
 
     }
