@@ -2,6 +2,7 @@ package com.rockacode.ocr.communication;
 
 import com.rockacode.ocr.OcrApplication;
 import com.rockacode.ocr.R;
+import com.rockacode.ocr.util.AppSharePreferences;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -19,15 +20,8 @@ public class OcrService {
     private static OcrService instance;
     private static OcrApi ocrApi;
 
-    public static OcrService getInstance() {
-        if (instance == null) {
-            instance = new OcrService();
-        }
-        return instance;
-    }
-
     public OcrService() {
-        API_BASE_URL = OcrApplication.getContext().getString(R.string.base_url);
+        API_BASE_URL = AppSharePreferences.getInstance().getServerUrl();
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         // set your desired log level
@@ -46,8 +40,12 @@ public class OcrService {
         ocrApi = retrofit.create(OcrApi.class);
     }
 
-    public OcrApi getService() {
-        return ocrApi;
+    public static void recreate(){
+        instance = new OcrService();
+    }
+
+    public OcrService getService() {
+        return instance;
     }
 
     public static OcrApi getApi() {
