@@ -91,63 +91,27 @@ public class ImageActivity extends BaseActivity implements View.OnClickListener 
 
     private void sendPhotoToProcess(boolean ocr) {
         if (ocr) {
-            new PhotoToTextTask(filePath).execute().subscribe(new Subscriber<ResponseText>() {
-
-                @Override
-                public void onStart() {
-                }
-
-                @Override
-                public void onCompleted() {
-
-                }
-
-                @Override
-                public void onError(Throwable e) {
-
-                }
-
-                @Override
-                public void onNext(ResponseText responseText) {
-                    Toast.makeText(getBaseContext(),responseText.getText(),Toast.LENGTH_LONG).show();
-                }
-            });
+            new PhotoToTextTask(filePath).execute().subscribe(responseText -> Toast.makeText(getBaseContext(),responseText.getText(),Toast.LENGTH_LONG).show());
         } else {
-            new SendPhotoTask(filePath).execute().subscribe(new Subscriber<ResponsePhoto>() {
-                @Override
-                public void onStart() {
-                }
-
-                @Override
-                public void onCompleted() {
-
-                }
-
-                @Override
-                public void onError(Throwable e) {
-
-                }
-
-                @Override
-                public void onNext(ResponsePhoto responsePhoto) {
-                    File photo = new File(Environment.getExternalStorageDirectory(), "photo.jpg");
-
-                    if (photo.exists()) {
-                        photo.delete();
-                    }
-
-                    try {
-                        FileOutputStream fos = new FileOutputStream(photo.getPath());
-                        fos.write(responsePhoto.getPhoto());
-                        fos.close();
-                    } catch (java.io.IOException e) {
-                        e.fillInStackTrace();
-                    }
-
-                    Picasso.with(ImageActivity.this).load(photo).placeholder(R.drawable.ic_menu_camera).fit().centerInside().into(imageView);
-                }
-
-            });
+            new SendPhotoTask(filePath).execute().subscribe(responsePhoto -> saveAndShowPhoto(responsePhoto));
         }
+    }
+
+    private void saveAndShowPhoto(ResponsePhoto responsePhoto){
+        File photo = new File(Environment.getExternalStorageDirectory(), "photo.jpg");
+
+        if (photo.exists()) {
+            photo.delete();
+        }
+
+        try {
+            FileOutputStream fos = new FileOutputStream(photo.getPath());
+            fos.write(responsePhoto.getPhoto());
+            fos.close();
+        } catch (java.io.IOException e) {
+            e.fillInStackTrace();
+        }
+
+        Picasso.with(ImageActivity.this).load(photo).placeholder(R.drawable.ic_menu_camera).fit().centerInside().into(imageView);
     }
 }

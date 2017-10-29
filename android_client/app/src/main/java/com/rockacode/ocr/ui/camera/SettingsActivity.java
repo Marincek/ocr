@@ -40,5 +40,4 @@ public class SettingsActivity extends AppCompatActivity {
         serverUrl.setText(AppSharePreferences.getInstance().getServerUrl());
     }
 
-
 }

@@ -51,24 +51,16 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         takePhotoBtn = (Button) findViewById(R.id.take_photo);
-        takePhotoBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                takePhoto();
-            }
-        });
+        takePhotoBtn.setOnClickListener(view -> takePhoto());
         choosePhotoBtn = (Button) findViewById(R.id.choose_photo);
-        choosePhotoBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                choosePhoto();
-            }
-        });
+        choosePhotoBtn.setOnClickListener(view -> choosePhoto());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 String[] perms = {"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.CAMERA"};
                 ActivityCompat.requestPermissions(this, perms, permsRequestCode);
+            }else{
+                takePhotoBtn.setEnabled(true);
             }
         }
     }
