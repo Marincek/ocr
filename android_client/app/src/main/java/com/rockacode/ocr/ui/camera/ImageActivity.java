@@ -79,9 +79,6 @@ public class ImageActivity extends BaseActivity implements View.OnClickListener 
             case R.id.menu_item_proces_photo_ocr:
                 sendPhotoToProcess(true);
                 break;
-            case R.id.menu_item_settings:
-                openSettings();
-                break;
         }
         floatingActionMenu.close(true);
     }

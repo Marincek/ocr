@@ -38,14 +38,6 @@
             app:fab_label="Process photo and do OCR"
             app:fab_size="mini" />
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/menu_item_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_settings_white_24dp"
-            app:fab_label="Settings"
-            app:fab_size="mini" />
-
 
     </com.github.clans.fab.FloatingActionMenu>
 

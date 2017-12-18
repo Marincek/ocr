@@ -4,6 +4,8 @@ import com.rockacode.ocr.OcrApplication;
 import com.rockacode.ocr.R;
 import com.rockacode.ocr.util.AppSharePreferences;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -30,6 +32,8 @@ public class OcrService {
         // add your other interceptors …
         // add logging as last interceptor
         httpClient.addInterceptor(logging);
+        httpClient.connectTimeout(10, TimeUnit.SECONDS);
+        httpClient.readTimeout(30, TimeUnit.SECONDS);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
