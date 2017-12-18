@@ -32,7 +32,6 @@ public class ImageActivity extends BaseActivity implements View.OnClickListener 
     private FloatingActionMenu floatingActionMenu;
     private FloatingActionButton processPhoto;
     private FloatingActionButton ocrPhoto;
-    private FloatingActionButton settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +59,6 @@ public class ImageActivity extends BaseActivity implements View.OnClickListener 
         processPhoto.setOnClickListener(this);
         ocrPhoto = (FloatingActionButton) findViewById(R.id.menu_item_proces_photo_ocr);
         ocrPhoto.setOnClickListener(this);
-        settings = (FloatingActionButton) findViewById(R.id.menu_item_settings);
-        settings.setOnClickListener(this);
         floatingActionMenu = (FloatingActionMenu) findViewById(R.id.fab);
         if(filePath.toString().startsWith("/stor")){
             filePath = Uri.parse("file://"+filePath.toString());
